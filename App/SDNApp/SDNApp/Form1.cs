@@ -18,9 +18,10 @@ namespace SDNApp
 {
     public partial class Form1 : Form
     {
-        string baseURI = @"http://192.168.56.102:8181/restconf/operational/network-topology:network-topology";
-        private List<User> listaUsers;
+        string baseURI = @"http://192.168.10.3:8181/restconf/operational/network-topology:network-topology";
         private String responseString = "";
+        String username = "admin";
+        String password = "admin";
 
         public Form1()
         {
@@ -40,18 +41,23 @@ namespace SDNApp
             //    Debug.WriteLine("### INVALID IP ###");
             //}
 
-            String username = "admin";
-            String password = "admin";
-            String encoded = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
-            
-
             string URI = baseURI;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
+            String encoded = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
             request.Headers.Add("Authorization", "Basic " + encoded);
 
+            if (testConnectionWebService(URI, request))
+            {
+                this.getNodeIds(request);
+            }
 
+        }
+
+
+
+        private void getNodeIds(HttpWebRequest request)
+        {
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
 
             using (Stream stream = response.GetResponseStream())
             {
@@ -90,6 +96,8 @@ namespace SDNApp
         }
 
 
+
+
         // funcao para testes de connection com um webservice
         private Boolean testConnectionWebService(string URI, HttpWebRequest request)
         {
@@ -109,46 +117,6 @@ namespace SDNApp
                 this.labelStatus.Text = "OFF";
                 return false;
             }
-        }
-
-        // faz um pedido get a um URL
-        private string getURIcontent(string URI)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
-
-            if (testConnectionWebService(URI, request))
-            {
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-
-                using (Stream stream = response.GetResponseStream())
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        Console.WriteLine(reader.ReadToEnd());
-                        //MessageBox.Show(reader.ReadToEnd());
-
-                        JObject results = JObject.Parse(reader.ReadToEnd());
-                        foreach (var result in results["Data"])
-                        {
-
-                        }
-
-                        return reader.ReadToEnd();
-                    }
-                }
-
-            }
-            return null;
-        }
-
-        // testes
-        private void getUsers()
-        {
-            string URI = baseURI;
-            string content = getURIcontent(URI);
-
-
         }
     }
 }
