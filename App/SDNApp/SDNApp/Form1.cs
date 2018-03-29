@@ -18,8 +18,9 @@ namespace SDNApp
 {
     public partial class Form1 : Form
     {
-        string baseURI = @"http://recurso.dad/api/users";
+        string baseURI = @"http://192.168.56.102:8181/restconf/operational/network-topology:network-topology";
         private List<User> listaUsers;
+        private String responseString = "";
 
         public Form1()
         {
@@ -39,16 +40,55 @@ namespace SDNApp
             //    Debug.WriteLine("### INVALID IP ###");
             //}
 
+            String username = "admin";
+            String password = "admin";
+            String encoded = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
+            
+
             string URI = baseURI;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
+            request.Headers.Add("Authorization", "Basic " + encoded);
 
-            if (testConnectionWebService(URI, request))
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+
+            using (Stream stream = response.GetResponseStream())
             {
-                this.getUsers();
+                StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                responseString = reader.ReadToEnd();
+            }
+            //MessageBox.Show(responseString);
+            parseTextTest(responseString);
+
+        }
+
+
+
+        private void parseTextTest(string text)
+        {
+            JObject networkTopology = JObject.Parse(text);
+            var aux = networkTopology["network-topology"];
+
+            //DEBUG
+            //MessageBox.Show(networkTopology["network-topology"].ToString());
+            MessageBox.Show(aux.ToString());
+
+            foreach(var result in aux["topology"])
+            {
+                string topologyID = (string)result["topology-id"];
+                MessageBox.Show(topologyID);
+
+                foreach (var result2 in result["node"])
+                {
+                    //string tpId = (string)result2["host-tracker-service:attachment-points"];
+                    MessageBox.Show(result2.ToString());
+                }
 
             }
 
         }
+
 
         // funcao para testes de connection com um webservice
         private Boolean testConnectionWebService(string URI, HttpWebRequest request)
