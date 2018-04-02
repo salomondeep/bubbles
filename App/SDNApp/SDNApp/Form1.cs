@@ -18,10 +18,11 @@ namespace SDNApp
 {
     public partial class Form1 : Form
     {
-        string baseURI = @"http://192.168.10.3:8181/restconf/operational/network-topology:network-topology";
+        string baseURI = "http://";
         private String responseString = "";
-        String username = "admin";
-        String password = "admin";
+        static String username = "admin";
+        static String password = "admin";
+        String encoded = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
 
         public Form1()
         {
@@ -30,27 +31,29 @@ namespace SDNApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //IPAddress ipAddress;
-            //if (IPAddress.TryParse(textBoxSDNData.Text, out ipAddress))
-            //{
-            //    Debug.WriteLine("### VALID IP ###");
+            IPAddress ipAddress;
 
-            //}
-            //else
-            //{
-            //    Debug.WriteLine("### INVALID IP ###");
-            //}
-
-            string URI = baseURI;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
-            String encoded = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
-            request.Headers.Add("Authorization", "Basic " + encoded);
-
-            if (testConnectionWebService(URI, request))
+            if (IPAddress.TryParse(textBoxSDNIP.Text, out ipAddress))
             {
-                this.getNodeIds(request);
-            }
+                //Debug.WriteLine("### VALID IP ###");
+                MessageBox.Show("### VALID IP ###");
 
+                string URI = baseURI + textBoxSDNIP.Text + ":8181/restconf/operational/network-topology:network-topology";
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
+                request.Headers.Add("Authorization", "Basic " + encoded);
+
+                if (testConnectionWebService(URI, request))
+                {
+                    this.getNodeIds(request);
+                }
+
+            }
+            else
+            {
+                //Debug.WriteLine("### INVALID IP ###");
+                MessageBox.Show("### INVALID IP ###");
+            }
         }
 
 
@@ -80,7 +83,7 @@ namespace SDNApp
             //MessageBox.Show(networkTopology["network-topology"].ToString());
             MessageBox.Show(aux.ToString());
 
-            foreach(var result in aux["topology"])
+            foreach (var result in aux["topology"])
             {
                 string topologyID = (string)result["topology-id"];
                 MessageBox.Show(topologyID);
