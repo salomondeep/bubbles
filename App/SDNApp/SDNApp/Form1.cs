@@ -297,10 +297,10 @@ namespace SDNApp
                 radioButtonFalse.Enabled = true;
             
 
-            if(listBoxFlows.SelectedItem != null)
-            {
-                listBoxFlows.ClearSelected();
-            }
+            //if(listBoxFlows.SelectedItem != null)
+            //{
+            //    listBoxFlows.ClearSelected();
+            //}
 
             if(listBoxHosts.SelectedItem != null)
             {
@@ -621,19 +621,28 @@ namespace SDNApp
                 listBoxOpenflow.ClearSelected();
             }
 
-            Flow flow = listBoxFlows.SelectedItem as Flow;
+            if (listBoxHosts.SelectedItem != null)
+            {
+                listBoxHosts.ClearSelected();
+            }
+
+            //Flow flow = new Flow();
+            string flow = listBoxFlows.SelectedItem.ToString();
 
             buttonDeleteFlow.Enabled = true;
             buttonUpdateFlow.Enabled = true;
 
             enableFields();
-            fillFields(flow);
+            //fillFields(flow);
         }
 
 
         //fill the fields with flow information
         private void fillFields(Flow flow)
         {
+            textBoxFlowname.Text = flow.Flow_name;
+            textBoxFlowId.Text = flow.Id.ToString();
+            textBoxFlowOrder.Text = flow.Order.ToString();
 
         }
 
@@ -684,6 +693,28 @@ namespace SDNApp
             buttonGetNodeTerminationPoints.Enabled = true;
 
             DisableAndClean();
+        }
+
+        private void listBoxFlows_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (listBoxOpenflow.SelectedItem != null)
+            {
+                listBoxOpenflow.ClearSelected();
+            }
+
+            if (listBoxHosts.SelectedItem != null)
+            {
+                listBoxHosts.ClearSelected();
+            }
+
+            Flow flow = new Flow();
+            flow = listBoxFlows.SelectedItem as Flow;
+
+            buttonDeleteFlow.Enabled = true;
+            buttonUpdateFlow.Enabled = true;
+
+            enableFields();
+            fillFields(flow);
         }
     }
 }

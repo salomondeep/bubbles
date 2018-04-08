@@ -62,7 +62,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonCreateFlow = new System.Windows.Forms.Button();
-            this.listBoxFlows = new System.Windows.Forms.ListBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -77,6 +76,7 @@
             this.labelConnectionToStatus = new System.Windows.Forms.Label();
             this.labelActiveStatus = new System.Windows.Forms.Label();
             this.groupBoxHostInfo = new System.Windows.Forms.GroupBox();
+            this.listBoxFlows = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBoxHostInfo.SuspendLayout();
@@ -421,16 +421,6 @@
             this.buttonCreateFlow.UseVisualStyleBackColor = false;
             this.buttonCreateFlow.Click += new System.EventHandler(this.buttonCreateFlow_Click);
             // 
-            // listBoxFlows
-            // 
-            this.listBoxFlows.FormattingEnabled = true;
-            this.listBoxFlows.ItemHeight = 16;
-            this.listBoxFlows.Location = new System.Drawing.Point(395, 451);
-            this.listBoxFlows.Name = "listBoxFlows";
-            this.listBoxFlows.Size = new System.Drawing.Size(205, 228);
-            this.listBoxFlows.TabIndex = 13;
-            this.listBoxFlows.SelectedIndexChanged += new System.EventHandler(this.listBoxFlows_SelectedIndexChanged);
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -567,18 +557,28 @@
             this.groupBoxHostInfo.Text = "Host info";
             this.groupBoxHostInfo.Visible = false;
             // 
+            // listBoxFlows
+            // 
+            this.listBoxFlows.FormattingEnabled = true;
+            this.listBoxFlows.ItemHeight = 16;
+            this.listBoxFlows.Location = new System.Drawing.Point(395, 472);
+            this.listBoxFlows.Name = "listBoxFlows";
+            this.listBoxFlows.Size = new System.Drawing.Size(205, 196);
+            this.listBoxFlows.TabIndex = 35;
+            this.listBoxFlows.SelectedIndexChanged += new System.EventHandler(this.listBoxFlows_SelectedIndexChanged_1);
+            // 
             // SDN_Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(679, 778);
+            this.Controls.Add(this.listBoxFlows);
             this.Controls.Add(this.groupBoxHostInfo);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.listBoxHosts);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.listBoxFlows);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.listBoxNodeTerminationPoints);
             this.Controls.Add(this.buttonGetNodeTerminationPoints);
@@ -621,7 +621,6 @@
         private System.Windows.Forms.Button buttonCreateFlow;
         private System.Windows.Forms.Button buttonDeleteFlow;
         private System.Windows.Forms.Button buttonUpdateFlow;
-        private System.Windows.Forms.ListBox listBoxFlows;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
@@ -649,6 +648,7 @@
         private System.Windows.Forms.Label labelConnectionToStatus;
         private System.Windows.Forms.Label labelActiveStatus;
         private System.Windows.Forms.GroupBox groupBoxHostInfo;
+        private System.Windows.Forms.ListBox listBoxFlows;
     }
 }
 
