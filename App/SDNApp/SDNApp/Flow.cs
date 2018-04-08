@@ -27,7 +27,7 @@ namespace SDNApp
 
         public override string ToString()
         {
-            return "Name: " + Flow_name + "   " + "Id: " + Id;
+            return "Name: " + Flow_name + "   " + "Id: " + Id + "   " + "Openflow: " + openflow;
         }
     }
 }

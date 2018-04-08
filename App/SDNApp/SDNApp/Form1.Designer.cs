@@ -424,7 +424,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(392, 430);
+            this.label12.Location = new System.Drawing.Point(340, 400);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(47, 17);
             this.label12.TabIndex = 21;
@@ -561,9 +561,9 @@
             // 
             this.listBoxFlows.FormattingEnabled = true;
             this.listBoxFlows.ItemHeight = 16;
-            this.listBoxFlows.Location = new System.Drawing.Point(395, 472);
+            this.listBoxFlows.Location = new System.Drawing.Point(334, 430);
             this.listBoxFlows.Name = "listBoxFlows";
-            this.listBoxFlows.Size = new System.Drawing.Size(205, 196);
+            this.listBoxFlows.Size = new System.Drawing.Size(318, 324);
             this.listBoxFlows.TabIndex = 35;
             this.listBoxFlows.SelectedIndexChanged += new System.EventHandler(this.listBoxFlows_SelectedIndexChanged_1);
             // 
