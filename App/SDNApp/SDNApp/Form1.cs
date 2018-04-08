@@ -326,12 +326,47 @@ namespace SDNApp
 
         private void buttonUpdateFlow_Click(object sender, EventArgs e)
         {
+            //UPDATE FLOW LIST
+            Flow flow = listBoxFlows.SelectedItem as Flow;
+            
+            if (listBoxFlows.SelectedItem != null)
+            {
+                listBoxFlows.ClearSelected();
+            }
+
+            listBoxFlows.Items.Remove(flow);
             
 
-            //Debug
-            //MessageBox.Show(flow.Flow_name + " " + flow.Id);
 
-            closeButtons();
+            //PUT
+            ip = textBoxSDNIP.Text;
+            string URL = baseURI + ip + ":" + port + "/restconf/config/opendaylight-inventory:nodes/node/" +
+                flow.openflow + "/table/" + flow.Table_id + "/flow/" + flow.Id;
+
+            //MessageBox.Show(URL);
+            XmlDocument doc = createXml();
+            UTF8Encoding encoding = new UTF8Encoding();
+            byte[] body = Encoding.UTF8.GetBytes(doc.OuterXml);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+            request.Method = "PUT";
+            request.ContentType = "application/xml";
+            request.ContentLength = body.Length;
+            request.Headers.Add("Authorization", "Basic " + encoded);
+
+            using (Stream stream = request.GetRequestStream())
+            {
+                stream.Write(body, 0, body.Length);
+            }
+
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            //MessageBox.Show(response.StatusCode.ToString());
+
+            response.Close();
+            DisableAndClean();
+
+            //DEBUG
         }
 
         private void textBox9_TextChanged(object sender, EventArgs e)
@@ -520,9 +555,9 @@ namespace SDNApp
 
             ip = textBoxSDNIP.Text;
             string URL = baseURI + ip + ":" + port + "/restconf/config/opendaylight-inventory:nodes/node/" +
-                listBoxOpenflow.SelectedItem.ToString() + "/table/" + flow.Table_id + "/flow/" + flow.Id;
+                flow.openflow + "/table/" + flow.Table_id + "/flow/" + flow.Id;
 
-            MessageBox.Show(URL);
+            //MessageBox.Show(URL);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.Method = "DELETE";
@@ -530,12 +565,20 @@ namespace SDNApp
 
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            MessageBox.Show(response.StatusCode.ToString());
+            //MessageBox.Show(response.StatusCode.ToString());
 
             response.Close();
 
-            buttonDeleteFlow.Enabled = false;
-            buttonUpdateFlow.Enabled = false;
+            //buttonDeleteFlow.Enabled = false;
+            //buttonUpdateFlow.Enabled = false;
+            
+            if (listBoxFlows.SelectedItem != null)
+            {
+                listBoxFlows.ClearSelected();
+            }
+
+            listBoxFlows.Items.Remove(flow);
+            DisableAndClean();
         }
 
 
@@ -640,10 +683,124 @@ namespace SDNApp
         //fill the fields with flow information
         private void fillFields(Flow flow)
         {
-            textBoxFlowname.Text = flow.Flow_name;
-            textBoxFlowId.Text = flow.Id.ToString();
-            textBoxFlowOrder.Text = flow.Order.ToString();
+            //textBoxFlowname.Text = flow.Flow_name;
+            //textBoxFlowId.Text = flow.Id.ToString();
+            //textBoxFlowOrder.Text = flow.Order.ToString();
 
+
+            if(flow != null)
+            {
+                this.ip = textBoxSDNIP.Text;
+                string URI = baseURI + this.ip + ":" + this.port + "/restconf/config/opendaylight-inventory:nodes/node/" + flow.openflow +
+                    "/table/" + flow.Table_id.ToString() + "/flow/" + flow.Id.ToString();
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
+                request.Headers.Add("Authorization", "Basic " + encoded);
+
+                if (testConnectionWebService(URI, request))
+                {
+                    //this.getNodeIds(request);
+                    //MessageBox.Show("I'm in");
+                    //MessageBox.Show(URI);
+
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                        responseString = reader.ReadToEnd();
+                    }
+                    //MessageBox.Show(responseString);
+
+                    JObject networkTopology = JObject.Parse(responseString);
+                    var aux = networkTopology["flow-node-inventory:flow"];
+
+                    foreach (var result in aux)
+                    {
+                        textBoxFlowname.Text = result["flow-name"].ToString();
+                        textBoxFlowId.Text = result["id"].ToString();
+
+                        JObject instructions = JObject.Parse(result["instructions"].ToString());
+
+                        foreach (var result2 in instructions["instruction"])
+                        {
+                            textBoxFlowOrder.Text = result2["order"].ToString();
+                        }
+
+                        textBoxTableId.Text = result["table_id"].ToString();
+                        textBoxHardTimeout.Text = result["hard-timeout"].ToString();
+                        textBoxIdleTimeout.Text = result["idle-timeout"].ToString();
+
+                        if (result["strict"].ToString().Equals("True"))
+                        {
+                            radioButtonFalse.Checked = false;
+                            radioButtonTrue.Checked = true;
+                        }
+                        else if (result["strict"].ToString().Equals("False"))
+                        {
+                            radioButtonFalse.Checked = true;
+                            radioButtonTrue.Checked = false;
+                        }
+
+                        textBoxFlowPriority.Text = result["priority"].ToString();
+
+
+                        JObject match = JObject.Parse(result["match"].ToString());
+
+                        string ipDest = match["ipv4-destination"].ToString();
+                        string ipSource = match["ipv4-source"].ToString();
+
+                        JObject ethernetMatch = JObject.Parse(match["ethernet-match"].ToString());
+                        JObject ethernetType = JObject.Parse(ethernetMatch["ethernet-type"].ToString());
+
+                        string type = ethernetMatch["ethernet-type"]["type"].ToString();
+
+                        string[] splitIPDest = ipDest.Split('/');
+                        string[] splitIPSource = ipSource.Split('/');
+
+                        //HERE
+                        textBoxFlowEtherType.Text = type;
+                        textBoxFlowIpDest.Text = splitIPDest[0];
+                        textBoxFlowIpSource.Text = splitIPSource[0];
+
+                        //DEBUGING
+                        //MessageBox.Show(ipDest);
+                        //MessageBox.Show(ipSource);
+                        //MessageBox.Show(splitIPDest[0]);
+                        //MessageBox.Show(splitIPSource[0]);
+                        //MessageBox.Show(result["strict"].ToString());
+
+                    }
+                    //foreach (var result in aux["topology"])
+                    //{
+                    //    string topologyID = (string)result["topology-id"];
+                    //    //MessageBox.Show(topologyID);
+
+                    //    foreach (var result2 in result["node"])
+                    //    {
+                    //        //string tpId = (string)result2["host-tracker-service:attachment-points"];
+                    //        //MessageBox.Show(result2.ToString());
+                    //        string nodeID = (string)result2["node-id"];
+                    //        //MessageBox.Show("topology: " + topologyID + " | node-id: " + nodeID);
+                    //        if (nodeID.StartsWith("host:"))
+                    //        {
+                    //            listBoxHosts.Items.Add(nodeID);
+                    //        }
+
+                    //        if (nodeID.StartsWith("openflow:"))
+                    //        {
+                    //            listBoxOpenflow.Items.Add(nodeID);
+                    //        }
+                    //    }
+                    //}
+
+
+                }
+            }else
+            {
+                //MessageBox.Show("Flow deleted");
+            }
+            
         }
 
 
@@ -660,7 +817,7 @@ namespace SDNApp
             textBoxFlowIpDest.Enabled = true;
             textBoxFlowIpSource.Enabled = true;
             textBoxFlowEtherType.Enabled = true;
-            buttonCreateFlow.Enabled = true;
+            //buttonCreateFlow.Enabled = true;
             radioButtonTrue.Enabled = true;
             radioButtonFalse.Enabled = true;
         }
@@ -697,14 +854,19 @@ namespace SDNApp
 
         private void listBoxFlows_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            if (listBoxOpenflow.SelectedItem != null)
-            {
-                listBoxOpenflow.ClearSelected();
-            }
+            //if (listBoxOpenflow.SelectedItem != null)
+            //{
+            //    listBoxOpenflow.ClearSelected();
+            //}
 
             if (listBoxHosts.SelectedItem != null)
             {
                 listBoxHosts.ClearSelected();
+            }
+
+            if(buttonCreateFlow.Enabled)
+            {
+                buttonCreateFlow.Enabled = false;
             }
 
             Flow flow = new Flow();
