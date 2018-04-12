@@ -280,7 +280,9 @@ namespace SDNApp
         }
 
         private void listBoxNodeIDS_SelectedIndexChanged(object sender, EventArgs e)
-        {            
+        {
+                listBoxFlows.ClearSelected();
+                listBoxNodeTerminationPoints.Items.Clear();
                 buttonGetNodeTerminationPoints.Enabled = true;
                 textBoxFlowname.Enabled = true;
                 textBoxFlowId.Enabled = true;
@@ -392,8 +394,23 @@ namespace SDNApp
             //    MessageBox.Show("Radio Button False");
             //}
 
-            XmlDocument doc = createXml();
-            XmlPost(doc);
+            if(String.IsNullOrEmpty(textBoxFlowname.Text) || String.IsNullOrEmpty(textBoxFlowId.Text) || String.IsNullOrEmpty(textBoxFlowOrder.Text) ||
+                String.IsNullOrEmpty(textBoxTableId.Text) || String.IsNullOrEmpty(textBoxHardTimeout.Text) || 
+                String.IsNullOrEmpty(textBoxIdleTimeout.Text) || String.IsNullOrEmpty(textBoxFlowPriority.Text) ||
+                String.IsNullOrEmpty(textBoxFlowPriority.Text) || String.IsNullOrEmpty(textBoxFlowEtherType.Text))
+            {
+                MessageBox.Show("You must fill all the fields!");
+            }
+            else if(radioButtonFalse.Checked == false && radioButtonTrue.Checked == false)
+            {
+                MessageBox.Show("You must fill all the fields!");
+            }
+            else
+            {
+                XmlDocument doc = createXml();
+                XmlPost(doc);
+            }
+
             //DisableAndClean();
         }
 
@@ -842,6 +859,9 @@ namespace SDNApp
 
         private void listBoxHosts_SelectedIndexChanged(object sender, EventArgs e)
         {
+            listBoxFlows.ClearSelected();
+            groupBoxHostInfo.Visible = false;
+            listBoxNodeTerminationPoints.Items.Clear();
             if (listBoxOpenflow.SelectedItem != null)
             {
                 listBoxOpenflow.ClearSelected();
