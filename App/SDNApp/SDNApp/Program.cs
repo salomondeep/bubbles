@@ -16,7 +16,7 @@ namespace SDNApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SDN_Manager());
+            Application.Run(new StartForm());
         }
     }
 }
