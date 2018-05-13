@@ -78,6 +78,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Flow.cs" />
+    <Compile Include="Openstack_Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Openstack_Manager.Designer.cs">
+      <DependentUpon>Openstack_Manager.cs</DependentUpon>
+    </Compile>
     <Compile Include="SDN_Manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +98,9 @@
     <Compile Include="StartForm.Designer.cs">
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Openstack_Manager.resx">
+      <DependentUpon>Openstack_Manager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SDN_Manager.resx">
       <DependentUpon>SDN_Manager.cs</DependentUpon>
     </EmbeddedResource>

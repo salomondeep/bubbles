@@ -19,6 +19,12 @@ namespace SDNApp
 
         private void btn_Start_Click(object sender, EventArgs e)
         {
+            Openstack_Manager openstack = new Openstack_Manager();
+            openstack.Show();
+        }
+
+        private void btn_start_Opendaylight_Click(object sender, EventArgs e)
+        {
             SDN_Manager manager = new SDN_Manager();
             manager.Show();
         }
