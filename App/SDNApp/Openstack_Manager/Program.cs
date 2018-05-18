@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SDNApp
+namespace Openstack_Manager
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace SDNApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new StartForm());
+            Application.Run(new Form1());
         }
     }
 }
