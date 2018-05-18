@@ -1,38 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Web.Script.Serialization;
-using Newtonsoft.Json.Linq;
 using System.Xml;
 
 namespace SDNApp
 {
     public partial class SDN_Manager : Form
     {
-        string baseURI = "http://";
+        private string baseURI = "http://";
         private String responseString = "";
-        static String username = "admin";
-        static String password = "admin";
-        string ip = "";
+        private static String username = "admin";
+        private static String password = "admin";
+        private string ip = "";
         private string port = "8181";
-        String encoded = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
-        string xmlns = "urn:opendaylight:flow:inventory";
+        private String encoded = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
+        private string xmlns = "urn:opendaylight:flow:inventory";
 
         public SDN_Manager()
         {
             InitializeComponent();
         }
-
-
 
         private void buttonGetNodeIDS_Click(object sender, EventArgs e)
         {
@@ -59,7 +50,6 @@ namespace SDNApp
                 //MessageBox.Show("### INVALID IP ###");
             }
         }
-
 
         private void getNodeIds(HttpWebRequest request)
         {
@@ -91,22 +81,18 @@ namespace SDNApp
                     //MessageBox.Show(result2.ToString());
                     string nodeID = (string)result2["node-id"];
                     //MessageBox.Show("topology: " + topologyID + " | node-id: " + nodeID);
-                    if(nodeID.StartsWith("host:"))
+                    if (nodeID.StartsWith("host:"))
                     {
                         listBoxHosts.Items.Add(nodeID);
                     }
 
-                    if(nodeID.StartsWith("openflow:"))
+                    if (nodeID.StartsWith("openflow:"))
                     {
                         listBoxOpenflow.Items.Add(nodeID);
                     }
                 }
             }
         }
-
-
-
-
 
         private void buttonGetNodeTerminationPoints_Click(object sender, EventArgs e)
         {
@@ -120,7 +106,7 @@ namespace SDNApp
                 //MessageBox.Show("### VALID IP ###");
 
                 this.ip = textBoxSDNIP.Text;
-                if(listBoxOpenflow.SelectedItem != null)
+                if (listBoxOpenflow.SelectedItem != null)
                 {
                     URI = baseURI + this.ip + ":" + this.port + "/restconf/operational/network-topology:network-topology/topology/flow:1/node/" + listBoxOpenflow.Text;
 
@@ -133,7 +119,7 @@ namespace SDNApp
                     }
                 }
 
-                if(listBoxHosts.SelectedItem != null)
+                if (listBoxHosts.SelectedItem != null)
                 {
                     URI = baseURI + this.ip + ":" + this.port + "/restconf/operational/network-topology:network-topology/topology/flow:1/node/" + listBoxHosts.Text;
 
@@ -145,9 +131,6 @@ namespace SDNApp
                         this.getHostsTPs(request);
                     }
                 }
-                
-
-
             }
             else
             {
@@ -173,7 +156,6 @@ namespace SDNApp
             //DEBUG
             //MessageBox.Show(aux.ToString());
 
-
             foreach (var result in aux)
             {
                 //MessageBox.Show((string)result["node-id"]);
@@ -189,7 +171,6 @@ namespace SDNApp
                 }
             }
         }
-
 
         private void getHostsTPs(HttpWebRequest request)
         {
@@ -208,9 +189,7 @@ namespace SDNApp
             //DEBUG
             //MessageBox.Show(aux.ToString());
 
-
             //groupBoxHostInfo.Visible = true;
-
 
             foreach (var result in aux)
             {
@@ -233,7 +212,6 @@ namespace SDNApp
                     labelMACStatus.Text = mac;
                 }
 
-
                 foreach (var result3 in result["host-tracker-service:attachment-points"])
                 {
                     string tpID = (string)result3["tp-id"];
@@ -242,7 +220,7 @@ namespace SDNApp
                     labelConnectionToStatus.Text = tpID;
                     labelActiveStatus.Text = active;
 
-                    if(labelActiveStatus.Text.Equals("True"))
+                    if (labelActiveStatus.Text.Equals("True"))
                     {
                         labelActiveStatus.ForeColor = System.Drawing.Color.Green;
                     }
@@ -251,7 +229,6 @@ namespace SDNApp
 
             groupBoxHostInfo.Visible = true;
         }
-
 
         // funcao para testes de connection com um webservice
         private Boolean testConnectionWebService(string URI, HttpWebRequest request)
@@ -280,63 +257,57 @@ namespace SDNApp
         }
 
         private void listBoxNodeIDS_SelectedIndexChanged(object sender, EventArgs e)
-        {            
-                buttonGetNodeTerminationPoints.Enabled = true;
-                textBoxFlowname.Enabled = true;
-                textBoxFlowId.Enabled = true;
-                textBoxFlowOrder.Enabled = true;
-                textBoxTableId.Enabled = true;
-                textBoxHardTimeout.Enabled = true;
-                textBoxIdleTimeout.Enabled = true;
-                textBoxFlowPriority.Enabled = true;
-                textBoxFlowIpDest.Enabled = true;
-                textBoxFlowIpSource.Enabled = true;
-                textBoxFlowEtherType.Enabled = true;
-                buttonCreateFlow.Enabled = true;
-                radioButtonTrue.Enabled = true;
-                radioButtonFalse.Enabled = true;
-            
+        {
+            buttonGetNodeTerminationPoints.Enabled = true;
+            textBoxFlowname.Enabled = true;
+            textBoxFlowId.Enabled = true;
+            textBoxFlowOrder.Enabled = true;
+            textBoxTableId.Enabled = true;
+            textBoxHardTimeout.Enabled = true;
+            textBoxIdleTimeout.Enabled = true;
+            textBoxFlowPriority.Enabled = true;
+            textBoxFlowIpDest.Enabled = true;
+            textBoxFlowIpSource.Enabled = true;
+            textBoxFlowEtherType.Enabled = true;
+            buttonCreateFlow.Enabled = true;
+            radioButtonTrue.Enabled = true;
+            radioButtonFalse.Enabled = true;
 
             //if(listBoxFlows.SelectedItem != null)
             //{
             //    listBoxFlows.ClearSelected();
             //}
 
-            if(listBoxHosts.SelectedItem != null)
+            if (listBoxHosts.SelectedItem != null)
             {
                 listBoxHosts.ClearSelected();
 
-                if(groupBoxHostInfo.Visible)
+                if (groupBoxHostInfo.Visible)
                 {
                     groupBoxHostInfo.Visible = false;
                 }
-
             }
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
-
         }
 
         private void buttonUpdateFlow_Click(object sender, EventArgs e)
         {
             //UPDATE FLOW LIST
             Flow flow = listBoxFlows.SelectedItem as Flow;
-            
+
             if (listBoxFlows.SelectedItem != null)
             {
                 listBoxFlows.ClearSelected();
             }
 
             listBoxFlows.Items.Remove(flow);
-            
-
 
             //PUT
             ip = textBoxSDNIP.Text;
@@ -359,7 +330,6 @@ namespace SDNApp
                 stream.Write(body, 0, body.Length);
             }
 
-
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             //MessageBox.Show(response.StatusCode.ToString());
 
@@ -371,7 +341,6 @@ namespace SDNApp
 
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void buttonCreateFlow_Click(object sender, EventArgs e)
@@ -396,7 +365,6 @@ namespace SDNApp
             XmlPost(doc);
             //DisableAndClean();
         }
-
 
         private XmlDocument createXml()
         {
@@ -434,7 +402,6 @@ namespace SDNApp
             XmlNode priority = doc.CreateElement("priority");
             XmlNode barrier = doc.CreateElement("barrier");
 
-
             order.InnerText = textBoxFlowOrder.Text;
             order2.InnerText = textBoxFlowOrder.Text;
             table_id.InnerText = textBoxTableId.Text;
@@ -458,9 +425,9 @@ namespace SDNApp
                 strict.InnerText = "false";
             }
 
-             Flow flow = createFlow(strict.InnerText, order.InnerText, id.InnerText, hard_timeout.InnerText,
-                idle_timeout.InnerText, flowName.InnerText, textBoxFlowIpSource.Text, textBoxFlowIpDest.Text,
-                priority.InnerText, table_id.InnerText);
+            Flow flow = createFlow(strict.InnerText, order.InnerText, id.InnerText, hard_timeout.InnerText,
+               idle_timeout.InnerText, flowName.InnerText, textBoxFlowIpSource.Text, textBoxFlowIpDest.Text,
+               priority.InnerText, table_id.InnerText);
 
             sendFlowToList(flow);
 
@@ -509,7 +476,7 @@ namespace SDNApp
         private void XmlPost(XmlDocument doc)
         {
             ip = textBoxSDNIP.Text;
-            string URL = baseURI + ip + ":" + port + "/restconf/config/opendaylight-inventory:nodes/node/"+ 
+            string URL = baseURI + ip + ":" + port + "/restconf/config/opendaylight-inventory:nodes/node/" +
                 listBoxOpenflow.SelectedItem.ToString() + "/table/" + textBoxTableId.Text;
 
             //MessageBox.Show(URL);
@@ -528,15 +495,11 @@ namespace SDNApp
             {
                 stream.Write(body, 0, body.Length);
             }
-                
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             //MessageBox.Show(response.StatusCode.ToString());
 
             response.Close();
-
-
-
 
             //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
             //request.Headers.Add("Authorization", "Basic " + encoded);
@@ -546,7 +509,6 @@ namespace SDNApp
 
         private void groupBox1_Enter_1(object sender, EventArgs e)
         {
-
         }
 
         private void buttonDeleteFlow_Click(object sender, EventArgs e)
@@ -563,7 +525,6 @@ namespace SDNApp
             request.Method = "DELETE";
             request.Headers.Add("Authorization", "Basic " + encoded);
 
-
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             //MessageBox.Show(response.StatusCode.ToString());
 
@@ -571,7 +532,7 @@ namespace SDNApp
 
             //buttonDeleteFlow.Enabled = false;
             //buttonUpdateFlow.Enabled = false;
-            
+
             if (listBoxFlows.SelectedItem != null)
             {
                 listBoxFlows.ClearSelected();
@@ -581,24 +542,22 @@ namespace SDNApp
             DisableAndClean();
         }
 
-
         //Method that creates a flow
         private Flow createFlow(string strict, string order, string id, string hard_timeout, string idle_timeout,
             string flowName, string ipSource, string ipDestination, string priority, string table_id)
         {
             Flow flow = new Flow();
 
-
             //Parsing string to IPs
             IPAddress source = IPAddress.Parse(ipSource);
             IPAddress destination = IPAddress.Parse(ipDestination);
 
-
             //Flow Object creation
-            if(strict.Equals("true"))
+            if (strict.Equals("true"))
             {
                 flow.Strict = true;
-            }else
+            }
+            else
             {
                 flow.Strict = false;
             }
@@ -654,7 +613,6 @@ namespace SDNApp
             radioButtonFalse.Enabled = false;
 
             closeButtons();
-
         }
 
         private void listBoxFlows_SelectedIndexChanged(object sender, EventArgs e)
@@ -679,7 +637,6 @@ namespace SDNApp
             //fillFields(flow);
         }
 
-
         //fill the fields with flow information
         private void fillFields(Flow flow)
         {
@@ -687,8 +644,7 @@ namespace SDNApp
             //textBoxFlowId.Text = flow.Id.ToString();
             //textBoxFlowOrder.Text = flow.Order.ToString();
 
-
-            if(flow != null)
+            if (flow != null)
             {
                 this.ip = textBoxSDNIP.Text;
                 string URI = baseURI + this.ip + ":" + this.port + "/restconf/config/opendaylight-inventory:nodes/node/" + flow.openflow +
@@ -744,7 +700,6 @@ namespace SDNApp
 
                         textBoxFlowPriority.Text = result["priority"].ToString();
 
-
                         JObject match = JObject.Parse(result["match"].ToString());
 
                         string ipDest = match["ipv4-destination"].ToString();
@@ -769,7 +724,6 @@ namespace SDNApp
                         //MessageBox.Show(splitIPDest[0]);
                         //MessageBox.Show(splitIPSource[0]);
                         //MessageBox.Show(result["strict"].ToString());
-
                     }
                     //foreach (var result in aux["topology"])
                     //{
@@ -793,16 +747,13 @@ namespace SDNApp
                     //        }
                     //    }
                     //}
-
-
                 }
-            }else
+            }
+            else
             {
                 //MessageBox.Show("Flow deleted");
             }
-            
         }
-
 
         //Enable fields for user to write
         private void enableFields()
@@ -824,7 +775,7 @@ namespace SDNApp
 
         private void closeButtons()
         {
-            if(buttonCreateFlow.Enabled)
+            if (buttonCreateFlow.Enabled)
             {
                 buttonCreateFlow.Enabled = false;
             }
@@ -864,7 +815,7 @@ namespace SDNApp
                 listBoxHosts.ClearSelected();
             }
 
-            if(buttonCreateFlow.Enabled)
+            if (buttonCreateFlow.Enabled)
             {
                 buttonCreateFlow.Enabled = false;
             }
@@ -880,5 +831,3 @@ namespace SDNApp
         }
     }
 }
-
-

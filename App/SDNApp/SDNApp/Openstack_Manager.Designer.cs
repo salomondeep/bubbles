@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -37,16 +38,21 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnAccess = new System.Windows.Forms.Button();
             this.listBoxProjects = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnGetServers = new System.Windows.Forms.Button();
             this.listBoxServers = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btn_logout = new System.Windows.Forms.Button();
+            this.labelStatus = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxPassword
             // 
             this.textBoxPassword.Location = new System.Drawing.Point(92, 95);
             this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(124, 22);
+            this.textBoxPassword.Size = new System.Drawing.Size(166, 22);
             this.textBoxPassword.TabIndex = 0;
             this.textBoxPassword.UseSystemPasswordChar = true;
             // 
@@ -82,14 +88,14 @@
             // 
             this.textBoxIP.Location = new System.Drawing.Point(116, 32);
             this.textBoxIP.Name = "textBoxIP";
-            this.textBoxIP.Size = new System.Drawing.Size(100, 22);
+            this.textBoxIP.Size = new System.Drawing.Size(142, 22);
             this.textBoxIP.TabIndex = 4;
             // 
             // textBoxUsername
             // 
             this.textBoxUsername.Location = new System.Drawing.Point(97, 64);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(119, 22);
+            this.textBoxUsername.Size = new System.Drawing.Size(161, 22);
             this.textBoxUsername.TabIndex = 5;
             // 
             // label4
@@ -103,7 +109,7 @@
             // 
             // btnAccess
             // 
-            this.btnAccess.Location = new System.Drawing.Point(141, 123);
+            this.btnAccess.Location = new System.Drawing.Point(183, 123);
             this.btnAccess.Name = "btnAccess";
             this.btnAccess.Size = new System.Drawing.Size(75, 23);
             this.btnAccess.TabIndex = 8;
@@ -120,14 +126,14 @@
             this.listBoxProjects.Size = new System.Drawing.Size(200, 84);
             this.listBoxProjects.TabIndex = 9;
             // 
-            // button1
+            // btnGetServers
             // 
-            this.button1.Location = new System.Drawing.Point(238, 213);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Get Servers >>>";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnGetServers.Location = new System.Drawing.Point(238, 213);
+            this.btnGetServers.Name = "btnGetServers";
+            this.btnGetServers.Size = new System.Drawing.Size(121, 23);
+            this.btnGetServers.TabIndex = 10;
+            this.btnGetServers.Text = "Get Servers >>>";
+            this.btnGetServers.UseVisualStyleBackColor = true;
             // 
             // listBoxServers
             // 
@@ -140,7 +146,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(588, 189);
+            this.groupBox1.Location = new System.Drawing.Point(584, 173);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(272, 100);
             this.groupBox1.TabIndex = 12;
@@ -148,14 +154,50 @@
             this.groupBox1.Text = "Server Info:";
             this.groupBox1.Visible = false;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(451, 358);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // btn_logout
+            // 
+            this.btn_logout.Location = new System.Drawing.Point(781, 26);
+            this.btn_logout.Name = "btn_logout";
+            this.btn_logout.Size = new System.Drawing.Size(75, 23);
+            this.btn_logout.TabIndex = 14;
+            this.btn_logout.Text = "logout";
+            this.btn_logout.UseVisualStyleBackColor = true;
+            this.btn_logout.Click += new System.EventHandler(this.btn_logout_Click);
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.Location = new System.Drawing.Point(44, 126);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(48, 17);
+            this.labelStatus.TabIndex = 15;
+            this.labelStatus.Text = "Status";
+            // 
             // Openstack_Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(887, 450);
+            this.ClientSize = new System.Drawing.Size(905, 450);
+            this.Controls.Add(this.labelStatus);
+            this.Controls.Add(this.btn_logout);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.listBoxServers);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnGetServers);
             this.Controls.Add(this.listBoxProjects);
             this.Controls.Add(this.btnAccess);
             this.Controls.Add(this.label4);
@@ -167,6 +209,8 @@
             this.Controls.Add(this.textBoxPassword);
             this.Name = "Openstack_Manager";
             this.Text = "Openstack_Manager";
+            this.Load += new System.EventHandler(this.Openstack_Manager_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,8 +227,12 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnAccess;
         private System.Windows.Forms.ListBox listBoxProjects;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnGetServers;
         private System.Windows.Forms.ListBox listBoxServers;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button btn_logout;
+        private System.Windows.Forms.Label labelStatus;
     }
 }

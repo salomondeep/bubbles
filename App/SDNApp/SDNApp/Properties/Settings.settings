@@ -1,7 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SDNApp.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="user_login_file" Type="System.String" Scope="User">
+      <Value Profile="(Default)">app_data\user_login.json</Value>
+    </Setting>
+    <Setting Name="auth_token_file" Type="System.String" Scope="User">
+      <Value Profile="(Default)">app_data\auth_token</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
