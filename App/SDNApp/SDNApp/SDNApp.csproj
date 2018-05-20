@@ -22,7 +22,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -77,13 +77,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Flavor.cs" />
     <Compile Include="Flow.cs" />
+    <Compile Include="Interface.cs" />
+    <Compile Include="Openstack_Change_Password.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Openstack_Change_Password.Designer.cs">
+      <DependentUpon>Openstack_Change_Password.cs</DependentUpon>
+    </Compile>
     <Compile Include="Openstack_Manager.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Openstack_Manager.Designer.cs">
       <DependentUpon>Openstack_Manager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Project.cs" />
     <Compile Include="SDN_Manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +101,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
     <Compile Include="StartForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +109,9 @@
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
+    <EmbeddedResource Include="Openstack_Change_Password.resx">
+      <DependentUpon>Openstack_Change_Password.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Openstack_Manager.resx">
       <DependentUpon>Openstack_Manager.cs</DependentUpon>
     </EmbeddedResource>
@@ -133,6 +146,31 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app_data\change_password.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="app_data\create_flavor.json" />
+    <Content Include="app_data\login_with_scope.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\ServerOFF.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\ServerOn.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\ServerResume.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\ServerSUS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\user_login.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\auth_token">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\odl.png" />
   </ItemGroup>
   <ItemGroup>
