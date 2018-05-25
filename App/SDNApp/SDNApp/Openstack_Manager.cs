@@ -16,9 +16,15 @@ namespace SDNApp
         private static string login_scoped_file = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"app_data\login_with_scope.json");
         private static string auth_token_file = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"app_data\auth_token");
         private HashSet<Control> errorControls = new HashSet<Control>();
+        private List<Network> listNetworks = new List<Network>();
+        private List<Flavor> listFlavors = new List<Flavor>();
+        private List<Image> listImages = new List<Image>();
         public string ip = "";
         private String responseString = "";
         private User user = null;
+
+        internal List<Image> ListImages { get => listImages; set => listImages = value; }
+        internal List<Flavor> ListFlavors { get => listFlavors; set => listFlavors = value; }
 
         public Openstack_Manager()
         {
@@ -264,6 +270,7 @@ namespace SDNApp
             this.btnON.Visible = false;
             this.btnSUS.Visible = false;
             this.btnOFF.Visible = false;
+            this.btnImageManagement.Enabled = true;
         }
 
         //CREATE USER
@@ -341,8 +348,142 @@ namespace SDNApp
             else
             {
                 login_scoped();
+                get_images();
+                get_flavors();
+                get_networks();
                 this.btnGetServers.Enabled = true;
+                this.btnFlavorManagement.Enabled = true;
+                this.btnImageManagement.Enabled = true;
             }
+        }
+
+        private void get_flavors()
+        {
+            try
+            {
+                using (StreamReader r = new StreamReader(auth_token_file))
+                {
+                    var token = r.ReadToEnd();
+                    string URI = "http://" + this.ip + "/compute/v2.1/flavors/detail";
+
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
+                    request.Method = "GET";
+                    request.Headers.Add("X-Auth-Token", token);
+
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                        responseString = reader.ReadToEnd();
+                    }
+
+                    JObject json_object = JObject.Parse(responseString);
+
+                    //MessageBox.Show(json_object.ToString());
+                    foreach (var result in json_object["flavors"])
+                    {
+                        create_flavor(result);
+                        //MessageBox.Show(result.ToString());
+                    }
+                    response.Close();
+                }
+            }
+            catch (WebException ex)
+            {
+                using (var stream = ex.Response.GetResponseStream())
+                using (var reader = new StreamReader(stream))
+                {
+                    JObject jobject = JObject.Parse(reader.ReadToEnd());
+                    var error = jobject["error"];
+                    var code = error["code"];
+                    var title = error["title"];
+
+                    MessageBox.Show("Code: " + code + "\n" + title + "\n" + "Verify password");
+                    //DEBUG
+                    //MessageBox.Show(jobject.ToString());
+                }
+            }
+        }
+
+        private void create_flavor(JToken result)
+        {
+            Flavor flavor_obj = new Flavor();
+
+            flavor_obj.id = (string)result["id"];
+            flavor_obj.name = (string)result["name"];
+            flavor_obj.vcpu = (int)result["vcpus"];
+            flavor_obj.ram = (int)result["ram"];
+            flavor_obj.disk = (int)result["disk"];
+            listFlavors.Add(flavor_obj);
+        }
+
+        private void get_images()
+        {
+            try
+            {
+                using (StreamReader r = new StreamReader(auth_token_file))
+                {
+                    var token = r.ReadToEnd();
+                    string URI = "http://" + this.ip + "/compute/v2.1/images/detail";
+
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
+                    request.Method = "GET";
+                    request.Headers.Add("X-Auth-Token", token);
+
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                        responseString = reader.ReadToEnd();
+                    }
+
+                    JObject json_object = JObject.Parse(responseString);
+
+                    //MessageBox.Show(json_object.ToString());
+                    foreach (var result in json_object["images"])
+                    {
+                        create_image(result);
+                    }
+                    response.Close();
+                }
+            }
+            catch (WebException ex)
+            {
+                using (var stream = ex.Response.GetResponseStream())
+                using (var reader = new StreamReader(stream))
+                {
+                    JObject jobject = JObject.Parse(reader.ReadToEnd());
+                    var error = jobject["error"];
+                    var code = error["code"];
+                    var title = error["title"];
+
+                    MessageBox.Show("Code: " + code + "\n" + title + "\n" + "Verify password");
+                    //DEBUG
+                    //MessageBox.Show(jobject.ToString());
+                }
+            }
+        }
+
+        private void create_image(JToken result)
+        {
+            Image image_obj = new Image();
+
+            image_obj.id = (string)result["id"];
+            image_obj.name = (string)result["name"];
+            image_obj.size = (int)result["OS-EXT-IMG-SIZE:size"] / 1000000;
+
+            if (result["status"].ToString() == "ACTIVE")
+            {
+                image_obj.status = true;
+            }
+            else
+            {
+                image_obj.status = false;
+            }
+
+            ListImages.Add(image_obj);
         }
 
         private void listBoxProjects_SelectedIndexChanged(object sender, EventArgs e)
@@ -421,6 +562,7 @@ namespace SDNApp
                 {
                     //MessageBox.Show("Got the token bruh!");
                     File.WriteAllText(auth_token_file, headers[i]);
+                    //MessageBox.Show(headers[i].ToString());
                 }
             }
             //MessageBox.Show(response.StatusCode.ToString());
@@ -583,7 +725,7 @@ namespace SDNApp
 
                         var flavor_json = json_object2["flavor"];
 
-                        flavor_obj.id = (int)flavor_json["id"];
+                        flavor_obj.id = (string)flavor_json["id"];
                         flavor_obj.name = (string)flavor_json["name"];
                         flavor_obj.ram = (int)flavor_json["ram"];
                         flavor_obj.vcpu = (int)flavor_json["vcpus"];
@@ -619,7 +761,7 @@ namespace SDNApp
         private void listBoxServers_SelectedIndexChanged(object sender, EventArgs e)
         {
             Server server = listBoxServers.SelectedItem as Server;
-
+            //MessageBox.Show(server.id);
             if (server.status == "ACTIVE")
             {
                 labelState.ForeColor = System.Drawing.Color.Green;
@@ -839,6 +981,80 @@ namespace SDNApp
                     //MessageBox.Show(jobject.ToString());
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Openstack_Flavor_Management view = new Openstack_Flavor_Management();
+            view.ipv4 = this.ip;
+            view.openstack = this;
+
+            view.Show();
+        }
+
+        private void btnImageManagement_Click(object sender, EventArgs e)
+        {
+            Openstack_Image_Management view = new Openstack_Image_Management();
+            view.ipv4 = this.ip;
+            view.openstack = this;
+
+            view.Show();
+        }
+
+        private void get_networks()
+        {
+            try
+            {
+                using (StreamReader r = new StreamReader(auth_token_file))
+                {
+                    var token = r.ReadToEnd();
+                    string URI = "http://" + this.ip + ":9696/v2.0/networks";
+
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URI);
+                    request.Method = "GET";
+                    request.Headers.Add("X-Auth-Token", token);
+
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                        responseString = reader.ReadToEnd();
+                    }
+
+                    JObject json_object = JObject.Parse(responseString);
+
+                    //MessageBox.Show(json_object.ToString());
+                    foreach (var result in json_object["networks"])
+                    {
+                        create_network(result);
+                    }
+                    response.Close();
+                }
+            }
+            catch (WebException ex)
+            {
+                using (var stream = ex.Response.GetResponseStream())
+                using (var reader = new StreamReader(stream))
+                {
+                    JObject jobject = JObject.Parse(reader.ReadToEnd());
+                    var error = jobject["error"];
+                    var code = error["code"];
+                    var title = error["title"];
+
+                    MessageBox.Show("Code: " + code + "\n" + title + "\n" + "Verify password");
+                    //DEBUG
+                    //MessageBox.Show(jobject.ToString());
+                }
+            }
+        }
+
+        private void create_network(JToken result)
+        {
+            //MessageBox.Show(result.ToString());
+            //HERE
+            //FILL THE NETWORK LISTBOX THEN GET THE SUBNETS OF EACH ONE
+            //SUBNET MANAGEMENT
         }
     }
 }

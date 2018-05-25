@@ -22,7 +22,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -79,12 +79,26 @@
   <ItemGroup>
     <Compile Include="Flavor.cs" />
     <Compile Include="Flow.cs" />
+    <Compile Include="Image.cs" />
     <Compile Include="Interface.cs" />
+    <Compile Include="Network.cs" />
     <Compile Include="Openstack_Change_Password.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Openstack_Change_Password.Designer.cs">
       <DependentUpon>Openstack_Change_Password.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Openstack_Flavor_Management.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Openstack_Flavor_Management.Designer.cs">
+      <DependentUpon>Openstack_Flavor_Management.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Openstack_Image_Management.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Openstack_Image_Management.Designer.cs">
+      <DependentUpon>Openstack_Image_Management.cs</DependentUpon>
     </Compile>
     <Compile Include="Openstack_Manager.cs">
       <SubType>Form</SubType>
@@ -108,9 +122,16 @@
     <Compile Include="StartForm.Designer.cs">
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subnet.cs" />
     <Compile Include="User.cs" />
     <EmbeddedResource Include="Openstack_Change_Password.resx">
       <DependentUpon>Openstack_Change_Password.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Openstack_Flavor_Management.resx">
+      <DependentUpon>Openstack_Flavor_Management.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Openstack_Image_Management.resx">
+      <DependentUpon>Openstack_Image_Management.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Openstack_Manager.resx">
       <DependentUpon>Openstack_Manager.cs</DependentUpon>
@@ -146,10 +167,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app_data\auth_token">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="app_data\change_password.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="app_data\create_flavor.json" />
+    <Content Include="app_data\create_flavor.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="app_data\login_with_scope.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -166,9 +192,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="app_data\user_login.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="app_data\auth_token">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="images\odl.png" />

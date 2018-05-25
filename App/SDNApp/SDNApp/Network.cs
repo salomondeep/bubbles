@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace SDNApp
 {
-    internal class Flavor
+    internal class Network
     {
         public string id;
         public string name;
-        public int ram;
-        public int vcpu;
-        public int disk;
+        public List<Subnet> interfaces = new List<Subnet>();
 
         public override string ToString()
         {

@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace SDNApp
 {
-    internal class Flavor
+    internal class Image
     {
         public string id;
         public string name;
-        public int ram;
-        public int vcpu;
-        public int disk;
+        public Boolean status;
+        public int size;
 
         public override string ToString()
         {

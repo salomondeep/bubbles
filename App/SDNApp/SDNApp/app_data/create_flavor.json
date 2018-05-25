@@ -1,8 +1,8 @@
 ﻿{
-	"flavor": {
-		"name": "",
-		"ram":,
-		"vcpus":,
-		"disk":
-	}
+  "flavor": {
+    "name": "",
+    "ram":,
+    "vcpus":,
+    "disk": 0
+  }
 }
