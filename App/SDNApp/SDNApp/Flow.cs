@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SDNApp
 {
-    class Flow
+    internal class Flow
     {
         public Boolean Strict { get; set; }
         public int Order { get; set; }
@@ -19,11 +19,10 @@ namespace SDNApp
         public IPAddress Ipv4_source { get; set; }
         public int Priority { get; set; }
         public int Table_id { get; set; }
+        //teste GIT
 
         //needed only for API
         public string openflow { get; set; }
-
-
 
         public override string ToString()
         {
