@@ -22,7 +22,11 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+<<<<<<< HEAD
     <ApplicationRevision>6</ApplicationRevision>
+=======
+    <ApplicationRevision>8</ApplicationRevision>
+>>>>>>> Marin
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -77,7 +81,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Flavor.cs" />
     <Compile Include="Flow.cs" />
+<<<<<<< HEAD
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,67 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+=======
+    <Compile Include="Image.cs" />
+    <Compile Include="Interface.cs" />
+    <Compile Include="Network.cs" />
+    <Compile Include="Openstack_Change_Password.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Openstack_Change_Password.Designer.cs">
+      <DependentUpon>Openstack_Change_Password.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Openstack_Flavor_Management.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Openstack_Flavor_Management.Designer.cs">
+      <DependentUpon>Openstack_Flavor_Management.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Openstack_Image_Management.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Openstack_Image_Management.Designer.cs">
+      <DependentUpon>Openstack_Image_Management.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Openstack_Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Openstack_Manager.Designer.cs">
+      <DependentUpon>Openstack_Manager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Project.cs" />
+    <Compile Include="SDN_Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SDN_Manager.Designer.cs">
+      <DependentUpon>SDN_Manager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="StartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartForm.Designer.cs">
+      <DependentUpon>StartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subnet.cs" />
+    <Compile Include="User.cs" />
+    <EmbeddedResource Include="Openstack_Change_Password.resx">
+      <DependentUpon>Openstack_Change_Password.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Openstack_Flavor_Management.resx">
+      <DependentUpon>Openstack_Flavor_Management.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Openstack_Image_Management.resx">
+      <DependentUpon>Openstack_Image_Management.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Openstack_Manager.resx">
+      <DependentUpon>Openstack_Manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SDN_Manager.resx">
+      <DependentUpon>SDN_Manager.cs</DependentUpon>
+>>>>>>> Marin
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -114,6 +181,33 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app_data\auth_token">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\change_password.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\create_flavor.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\login_with_scope.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\ServerOFF.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\ServerOn.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\ServerResume.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\ServerSUS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app_data\user_login.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\odl.png" />
   </ItemGroup>
   <ItemGroup>

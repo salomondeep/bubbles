@@ -40,11 +40,36 @@
             this.listBoxProjects = new System.Windows.Forms.ListBox();
             this.btnGetServers = new System.Windows.Forms.Button();
             this.listBoxServers = new System.Windows.Forms.ListBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.groupServerInfo = new System.Windows.Forms.GroupBox();
+            this.labelDisk = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.labelRAM = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.labelCPU = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.labelState = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.btn_logout = new System.Windows.Forms.Button();
             this.labelStatus = new System.Windows.Forms.Label();
+            this.labelUser = new System.Windows.Forms.Label();
+            this.btnScope = new System.Windows.Forms.Button();
+            this.btn_change_password = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnON = new System.Windows.Forms.Button();
+            this.btnSUS = new System.Windows.Forms.Button();
+            this.btnOFF = new System.Windows.Forms.Button();
+            this.btnFlavorManagement = new System.Windows.Forms.Button();
+            this.btnImageManagement = new System.Windows.Forms.Button();
+            this.listBoxNetworks = new System.Windows.Forms.ListBox();
+            this.btnSubnetManagement = new System.Windows.Forms.Button();
+            this.btnCreateNetwork = new System.Windows.Forms.Button();
+            this.btnDeleteNetwork = new System.Windows.Forms.Button();
+            this.btnSSHManagement = new System.Windows.Forms.Button();
+            this.btnVolumeManagement = new System.Windows.Forms.Button();
+            this.btnCreateServer = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.groupServerInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,7 +136,7 @@
             // 
             this.btnAccess.Location = new System.Drawing.Point(183, 123);
             this.btnAccess.Name = "btnAccess";
-            this.btnAccess.Size = new System.Drawing.Size(75, 23);
+            this.btnAccess.Size = new System.Drawing.Size(75, 30);
             this.btnAccess.TabIndex = 8;
             this.btnAccess.Text = "Access";
             this.btnAccess.UseVisualStyleBackColor = true;
@@ -119,50 +144,130 @@
             // 
             // listBoxProjects
             // 
+            this.listBoxProjects.Enabled = false;
             this.listBoxProjects.FormattingEnabled = true;
             this.listBoxProjects.ItemHeight = 16;
             this.listBoxProjects.Location = new System.Drawing.Point(16, 189);
             this.listBoxProjects.Name = "listBoxProjects";
             this.listBoxProjects.Size = new System.Drawing.Size(200, 84);
             this.listBoxProjects.TabIndex = 9;
+            this.listBoxProjects.SelectedIndexChanged += new System.EventHandler(this.listBoxProjects_SelectedIndexChanged);
             // 
             // btnGetServers
             // 
+            this.btnGetServers.Enabled = false;
             this.btnGetServers.Location = new System.Drawing.Point(238, 213);
             this.btnGetServers.Name = "btnGetServers";
-            this.btnGetServers.Size = new System.Drawing.Size(121, 23);
+            this.btnGetServers.Size = new System.Drawing.Size(121, 28);
             this.btnGetServers.TabIndex = 10;
             this.btnGetServers.Text = "Get Servers >>>";
             this.btnGetServers.UseVisualStyleBackColor = true;
+            this.btnGetServers.Click += new System.EventHandler(this.btnGetServers_Click);
             // 
             // listBoxServers
             // 
+            this.listBoxServers.Enabled = false;
             this.listBoxServers.FormattingEnabled = true;
             this.listBoxServers.ItemHeight = 16;
             this.listBoxServers.Location = new System.Drawing.Point(378, 189);
             this.listBoxServers.Name = "listBoxServers";
-            this.listBoxServers.Size = new System.Drawing.Size(200, 84);
+            this.listBoxServers.Size = new System.Drawing.Size(200, 100);
             this.listBoxServers.TabIndex = 11;
+            this.listBoxServers.SelectedIndexChanged += new System.EventHandler(this.listBoxServers_SelectedIndexChanged);
             // 
-            // groupBox1
+            // groupServerInfo
             // 
-            this.groupBox1.Location = new System.Drawing.Point(584, 173);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(272, 100);
-            this.groupBox1.TabIndex = 12;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Server Info:";
-            this.groupBox1.Visible = false;
+            this.groupServerInfo.Controls.Add(this.labelDisk);
+            this.groupServerInfo.Controls.Add(this.label8);
+            this.groupServerInfo.Controls.Add(this.labelRAM);
+            this.groupServerInfo.Controls.Add(this.label6);
+            this.groupServerInfo.Controls.Add(this.labelCPU);
+            this.groupServerInfo.Controls.Add(this.label7);
+            this.groupServerInfo.Controls.Add(this.labelState);
+            this.groupServerInfo.Controls.Add(this.label5);
+            this.groupServerInfo.Location = new System.Drawing.Point(584, 173);
+            this.groupServerInfo.Name = "groupServerInfo";
+            this.groupServerInfo.Size = new System.Drawing.Size(272, 152);
+            this.groupServerInfo.TabIndex = 12;
+            this.groupServerInfo.TabStop = false;
+            this.groupServerInfo.Text = "Server Info:";
+            this.groupServerInfo.Visible = false;
             // 
-            // button2
+            // labelDisk
             // 
-            this.button2.Location = new System.Drawing.Point(451, 358);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.labelDisk.AutoSize = true;
+            this.labelDisk.Location = new System.Drawing.Point(52, 124);
+            this.labelDisk.Name = "labelDisk";
+            this.labelDisk.Size = new System.Drawing.Size(54, 17);
+            this.labelDisk.TabIndex = 8;
+            this.labelDisk.Text = "label10";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(11, 124);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(39, 17);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Disk";
+            // 
+            // labelRAM
+            // 
+            this.labelRAM.AutoSize = true;
+            this.labelRAM.Location = new System.Drawing.Point(59, 93);
+            this.labelRAM.Name = "labelRAM";
+            this.labelRAM.Size = new System.Drawing.Size(46, 17);
+            this.labelRAM.TabIndex = 5;
+            this.labelRAM.Text = "label8";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(11, 93);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(46, 17);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "RAM:";
+            // 
+            // labelCPU
+            // 
+            this.labelCPU.AutoSize = true;
+            this.labelCPU.Location = new System.Drawing.Point(57, 61);
+            this.labelCPU.Name = "labelCPU";
+            this.labelCPU.Size = new System.Drawing.Size(46, 17);
+            this.labelCPU.TabIndex = 3;
+            this.labelCPU.Text = "label8";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(11, 61);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(44, 17);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "CPU:";
+            // 
+            // labelState
+            // 
+            this.labelState.AutoSize = true;
+            this.labelState.Location = new System.Drawing.Point(69, 31);
+            this.labelState.Name = "labelState";
+            this.labelState.Size = new System.Drawing.Size(38, 17);
+            this.labelState.TabIndex = 1;
+            this.labelState.Text = "label";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(11, 31);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(59, 17);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Status:";
             // 
             // errorProvider1
             // 
@@ -172,10 +277,11 @@
             // 
             this.btn_logout.Location = new System.Drawing.Point(781, 26);
             this.btn_logout.Name = "btn_logout";
-            this.btn_logout.Size = new System.Drawing.Size(75, 23);
+            this.btn_logout.Size = new System.Drawing.Size(75, 28);
             this.btn_logout.TabIndex = 14;
             this.btn_logout.Text = "logout";
             this.btn_logout.UseVisualStyleBackColor = true;
+            this.btn_logout.Visible = false;
             this.btn_logout.Click += new System.EventHandler(this.btn_logout_Click);
             // 
             // labelStatus
@@ -186,16 +292,220 @@
             this.labelStatus.Size = new System.Drawing.Size(48, 17);
             this.labelStatus.TabIndex = 15;
             this.labelStatus.Text = "Status";
+            this.labelStatus.Visible = false;
+            // 
+            // labelUser
+            // 
+            this.labelUser.AutoSize = true;
+            this.labelUser.Location = new System.Drawing.Point(288, 32);
+            this.labelUser.Name = "labelUser";
+            this.labelUser.Size = new System.Drawing.Size(46, 17);
+            this.labelUser.TabIndex = 16;
+            this.labelUser.Text = "label5";
+            this.labelUser.Visible = false;
+            // 
+            // btnScope
+            // 
+            this.btnScope.Enabled = false;
+            this.btnScope.Location = new System.Drawing.Point(116, 279);
+            this.btnScope.Name = "btnScope";
+            this.btnScope.Size = new System.Drawing.Size(100, 32);
+            this.btnScope.TabIndex = 17;
+            this.btnScope.Text = "Scoped login";
+            this.btnScope.UseVisualStyleBackColor = true;
+            this.btnScope.Click += new System.EventHandler(this.btnScope_Click);
+            // 
+            // btn_change_password
+            // 
+            this.btn_change_password.Location = new System.Drawing.Point(708, 75);
+            this.btn_change_password.Name = "btn_change_password";
+            this.btn_change_password.Size = new System.Drawing.Size(148, 37);
+            this.btn_change_password.TabIndex = 18;
+            this.btn_change_password.Text = "Change Password";
+            this.btn_change_password.UseVisualStyleBackColor = true;
+            this.btn_change_password.Visible = false;
+            this.btn_change_password.Click += new System.EventHandler(this.btn_change_password_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(375, 160);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(61, 17);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "Servers:";
+            // 
+            // btnON
+            // 
+            this.btnON.BackColor = System.Drawing.Color.Green;
+            this.btnON.Enabled = false;
+            this.btnON.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnON.Location = new System.Drawing.Point(378, 295);
+            this.btnON.Name = "btnON";
+            this.btnON.Size = new System.Drawing.Size(41, 25);
+            this.btnON.TabIndex = 20;
+            this.btnON.Text = "ON";
+            this.btnON.UseVisualStyleBackColor = false;
+            this.btnON.Visible = false;
+            this.btnON.Click += new System.EventHandler(this.btnON_Click);
+            // 
+            // btnSUS
+            // 
+            this.btnSUS.BackColor = System.Drawing.Color.Gold;
+            this.btnSUS.Enabled = false;
+            this.btnSUS.Location = new System.Drawing.Point(447, 295);
+            this.btnSUS.Name = "btnSUS";
+            this.btnSUS.Size = new System.Drawing.Size(52, 25);
+            this.btnSUS.TabIndex = 21;
+            this.btnSUS.Text = "SUS";
+            this.btnSUS.UseVisualStyleBackColor = false;
+            this.btnSUS.Visible = false;
+            this.btnSUS.Click += new System.EventHandler(this.btnSUS_Click);
+            // 
+            // btnOFF
+            // 
+            this.btnOFF.BackColor = System.Drawing.Color.Red;
+            this.btnOFF.Enabled = false;
+            this.btnOFF.Location = new System.Drawing.Point(527, 295);
+            this.btnOFF.Name = "btnOFF";
+            this.btnOFF.Size = new System.Drawing.Size(51, 23);
+            this.btnOFF.TabIndex = 22;
+            this.btnOFF.Text = "OFF";
+            this.btnOFF.UseVisualStyleBackColor = false;
+            this.btnOFF.Visible = false;
+            this.btnOFF.Click += new System.EventHandler(this.btnOFF_Click);
+            // 
+            // btnFlavorManagement
+            // 
+            this.btnFlavorManagement.Enabled = false;
+            this.btnFlavorManagement.Location = new System.Drawing.Point(16, 344);
+            this.btnFlavorManagement.Name = "btnFlavorManagement";
+            this.btnFlavorManagement.Size = new System.Drawing.Size(154, 46);
+            this.btnFlavorManagement.TabIndex = 24;
+            this.btnFlavorManagement.Text = "Flavor Management";
+            this.btnFlavorManagement.UseVisualStyleBackColor = true;
+            this.btnFlavorManagement.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnImageManagement
+            // 
+            this.btnImageManagement.Enabled = false;
+            this.btnImageManagement.Location = new System.Drawing.Point(16, 416);
+            this.btnImageManagement.Name = "btnImageManagement";
+            this.btnImageManagement.Size = new System.Drawing.Size(154, 46);
+            this.btnImageManagement.TabIndex = 25;
+            this.btnImageManagement.Text = "Image Management";
+            this.btnImageManagement.UseVisualStyleBackColor = true;
+            this.btnImageManagement.Click += new System.EventHandler(this.btnImageManagement_Click);
+            // 
+            // listBoxNetworks
+            // 
+            this.listBoxNetworks.FormattingEnabled = true;
+            this.listBoxNetworks.ItemHeight = 16;
+            this.listBoxNetworks.Location = new System.Drawing.Point(382, 346);
+            this.listBoxNetworks.Name = "listBoxNetworks";
+            this.listBoxNetworks.Size = new System.Drawing.Size(196, 116);
+            this.listBoxNetworks.TabIndex = 26;
+            // 
+            // btnSubnetManagement
+            // 
+            this.btnSubnetManagement.Enabled = false;
+            this.btnSubnetManagement.Location = new System.Drawing.Point(598, 346);
+            this.btnSubnetManagement.Name = "btnSubnetManagement";
+            this.btnSubnetManagement.Size = new System.Drawing.Size(154, 46);
+            this.btnSubnetManagement.TabIndex = 27;
+            this.btnSubnetManagement.Text = "Subnet Management";
+            this.btnSubnetManagement.UseVisualStyleBackColor = true;
+            // 
+            // btnCreateNetwork
+            // 
+            this.btnCreateNetwork.BackColor = System.Drawing.Color.Green;
+            this.btnCreateNetwork.Enabled = false;
+            this.btnCreateNetwork.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnCreateNetwork.Location = new System.Drawing.Point(382, 468);
+            this.btnCreateNetwork.Name = "btnCreateNetwork";
+            this.btnCreateNetwork.Size = new System.Drawing.Size(80, 31);
+            this.btnCreateNetwork.TabIndex = 28;
+            this.btnCreateNetwork.Text = "Create";
+            this.btnCreateNetwork.UseVisualStyleBackColor = false;
+            this.btnCreateNetwork.Visible = false;
+            // 
+            // btnDeleteNetwork
+            // 
+            this.btnDeleteNetwork.BackColor = System.Drawing.Color.Red;
+            this.btnDeleteNetwork.Enabled = false;
+            this.btnDeleteNetwork.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnDeleteNetwork.Location = new System.Drawing.Point(498, 468);
+            this.btnDeleteNetwork.Name = "btnDeleteNetwork";
+            this.btnDeleteNetwork.Size = new System.Drawing.Size(80, 31);
+            this.btnDeleteNetwork.TabIndex = 29;
+            this.btnDeleteNetwork.Text = "Delete";
+            this.btnDeleteNetwork.UseVisualStyleBackColor = false;
+            this.btnDeleteNetwork.Visible = false;
+            // 
+            // btnSSHManagement
+            // 
+            this.btnSSHManagement.Enabled = false;
+            this.btnSSHManagement.Location = new System.Drawing.Point(183, 344);
+            this.btnSSHManagement.Name = "btnSSHManagement";
+            this.btnSSHManagement.Size = new System.Drawing.Size(154, 46);
+            this.btnSSHManagement.TabIndex = 30;
+            this.btnSSHManagement.Text = "SSH Keys Management";
+            this.btnSSHManagement.UseVisualStyleBackColor = true;
+            // 
+            // btnVolumeManagement
+            // 
+            this.btnVolumeManagement.Enabled = false;
+            this.btnVolumeManagement.Location = new System.Drawing.Point(183, 416);
+            this.btnVolumeManagement.Name = "btnVolumeManagement";
+            this.btnVolumeManagement.Size = new System.Drawing.Size(154, 46);
+            this.btnVolumeManagement.TabIndex = 31;
+            this.btnVolumeManagement.Text = "Volumes Management";
+            this.btnVolumeManagement.UseVisualStyleBackColor = true;
+            // 
+            // btnCreateServer
+            // 
+            this.btnCreateServer.Enabled = false;
+            this.btnCreateServer.Location = new System.Drawing.Point(598, 416);
+            this.btnCreateServer.Name = "btnCreateServer";
+            this.btnCreateServer.Size = new System.Drawing.Size(154, 46);
+            this.btnCreateServer.TabIndex = 32;
+            this.btnCreateServer.Text = "Create Server";
+            this.btnCreateServer.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(379, 326);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(70, 17);
+            this.label10.TabIndex = 33;
+            this.label10.Text = "Networks:";
             // 
             // Openstack_Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(905, 450);
+            this.ClientSize = new System.Drawing.Size(905, 526);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.btnCreateServer);
+            this.Controls.Add(this.btnVolumeManagement);
+            this.Controls.Add(this.btnSSHManagement);
+            this.Controls.Add(this.btnDeleteNetwork);
+            this.Controls.Add(this.btnCreateNetwork);
+            this.Controls.Add(this.btnSubnetManagement);
+            this.Controls.Add(this.listBoxNetworks);
+            this.Controls.Add(this.btnImageManagement);
+            this.Controls.Add(this.btnFlavorManagement);
+            this.Controls.Add(this.btnOFF);
+            this.Controls.Add(this.btnSUS);
+            this.Controls.Add(this.btnON);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.btn_change_password);
+            this.Controls.Add(this.btnScope);
+            this.Controls.Add(this.labelUser);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.btn_logout);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupServerInfo);
             this.Controls.Add(this.listBoxServers);
             this.Controls.Add(this.btnGetServers);
             this.Controls.Add(this.listBoxProjects);
@@ -210,6 +520,8 @@
             this.Name = "Openstack_Manager";
             this.Text = "Openstack_Manager";
             this.Load += new System.EventHandler(this.Openstack_Manager_Load);
+            this.groupServerInfo.ResumeLayout(false);
+            this.groupServerInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -229,10 +541,34 @@
         private System.Windows.Forms.ListBox listBoxProjects;
         private System.Windows.Forms.Button btnGetServers;
         private System.Windows.Forms.ListBox listBoxServers;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox groupServerInfo;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button btn_logout;
         private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.Label labelUser;
+        private System.Windows.Forms.Button btnScope;
+        private System.Windows.Forms.Button btn_change_password;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelState;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelCPU;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label labelRAM;
+        private System.Windows.Forms.Label labelDisk;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnON;
+        private System.Windows.Forms.Button btnOFF;
+        private System.Windows.Forms.Button btnSUS;
+        private System.Windows.Forms.Button btnFlavorManagement;
+        private System.Windows.Forms.Button btnImageManagement;
+        private System.Windows.Forms.Button btnCreateServer;
+        private System.Windows.Forms.Button btnVolumeManagement;
+        private System.Windows.Forms.Button btnSSHManagement;
+        private System.Windows.Forms.Button btnDeleteNetwork;
+        private System.Windows.Forms.Button btnCreateNetwork;
+        private System.Windows.Forms.Button btnSubnetManagement;
+        private System.Windows.Forms.ListBox listBoxNetworks;
+        private System.Windows.Forms.Label label10;
     }
 }
